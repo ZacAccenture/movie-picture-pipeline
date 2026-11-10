@@ -1,3 +1,28 @@
+## Deployment Evidence
+
+### Frontend
+
+The deployed frontend successfully retrieves and displays the movie list from the backend API.
+
+<img width="1285" height="1103" alt="frontend-working" src="https://github.com/user-attachments/assets/a6261b7f-4882-4496-8133-adf80d5c3337" />
+
+### Backend
+
+The deployed backend API successfully returns the movie list.
+
+<img width="2554" height="1348" alt="Backend-working" src="https://github.com/user-attachments/assets/da8e8093-978e-4e54-a139-b41587fb51d4" />
+
+
+
+
+
+
+
+
+
+
+
+
 # Movie Picture Pipeline
 
 You've been brought on as the DevOps resource for a development team that manages a web application that is a catalog of Movie Picture movies. They're in dire need of automating their development workflows in hopes of accelerating their release cycle. They'd like to use Github Actions to automate testing, building and deploying their applications to an existing Kubernetes cluster.
