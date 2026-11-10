@@ -1,4 +1,4 @@
-name: Frontend CI
+name: Frontend Continuous Integration
 
 on:
   pull_request:
@@ -6,8 +6,12 @@ on:
       - main
     paths:
       - "starter/frontend/**"
+      - ".github/workflows/frontend-ci.yaml"
 
   workflow_dispatch:
+
+env:
+  REACT_APP_MOVIE_API_URL: http://localhost:5000
 
 jobs:
   lint:
@@ -17,10 +21,10 @@ jobs:
         working-directory: starter/frontend
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: starter/frontend/.nvmrc
@@ -40,10 +44,10 @@ jobs:
         working-directory: starter/frontend
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: starter/frontend/.nvmrc
@@ -62,14 +66,27 @@ jobs:
       - lint
       - test
 
+    defaults:
+      run:
+        working-directory: starter/frontend
+
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: starter/frontend/.nvmrc
+          cache: npm
+          cache-dependency-path: starter/frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Build frontend Docker image
-        working-directory: starter/frontend
         run: |
           docker build \
-            --build-arg REACT_APP_MOVIE_API_URL=http://localhost:5000 \
+            --build-arg REACT_APP_MOVIE_API_URL=$REACT_APP_MOVIE_API_URL \
             --tag mp-frontend:${{ github.sha }} \
             .
